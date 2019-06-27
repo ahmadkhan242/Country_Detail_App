@@ -15,42 +15,43 @@ import com.example.retrofitcountryapi.Main2Activity
 import com.example.retrofitcountryapi.R
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.country_name_layout.view.*
 import kotlinx.android.synthetic.main.detail_layout.view.*
-import kotlinx.android.synthetic.main.post_item_layout.view.*
+import kotlinx.android.synthetic.main.country_name_layout.view.*
 var TAG: String  = "PostItemAdapter"
-class PostItemAdapter(val context: Context, var postList: List<Country>) :
+class CountryNameAdapter(val context: Context, var CountryList: List<Country>) :
 
 
-    RecyclerView.Adapter<PostItemAdapter.CustomViewHolder>() {
+    RecyclerView.Adapter<CountryNameAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):CustomViewHolder {
         val layoutInflater = LayoutInflater.from(context).inflate(
-            R.layout.post_item_layout,
+            R.layout.country_name_layout,
             parent, false
         )
         return CustomViewHolder(layoutInflater)
     }
     override fun getItemCount(): Int {
-        return postList.size
+        return CountryList.size
     }
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
 
-        var name = postList[position].callingCodes[0]
+        var name = CountryList[position].name
 
-        holder.view.txtPostTitle?.text = postList[position].name
-        holder.view.txtPostBody?.text = "Capital - " +postList[position].capital
+        holder.view.name?.text = CountryList[position].name
+        holder.view.capital?.text = "Capital - " +CountryList[position].capital
 
         var thumbnailImageView = holder.view.flag_imageView
-        GlideToVectorYou.justLoadImage(holder.view.context as Activity?, Uri.parse(postList[position].flag), thumbnailImageView)
+        GlideToVectorYou.justLoadImage(holder.view.context as Activity?, Uri.parse(CountryList[position].flag), thumbnailImageView)
 
-        holder.name = name
+        holder?.name = name
     }
 
     class CustomViewHolder(var view: View,var name: String? = null): RecyclerView.ViewHolder(view){
-    companion object {
-        var country_name = "name"
-    }
+        companion object {
+            var country_name = "name"
+        }
         init{
             view.setOnClickListener{
                 var intent = Intent(view.context, Main2Activity::class.java)

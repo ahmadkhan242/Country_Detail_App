@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import com.example.retrofitcountryapi.adaptor.DetailViewAdaptor
-import com.example.retrofitcountryapi.adaptor.PostItemAdapter
+import com.example.retrofitcountryapi.adaptor.CountryNameAdapter
 import com.google.gson.GsonBuilder
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,24 +22,22 @@ class Main2Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
 
-//        val bundle: Bundle? = intent.extras
-        var msg =  intent.getStringExtra(PostItemAdapter.CustomViewHolder.country_name)
+        var fullname =  intent.getStringExtra(CountryNameAdapter.CustomViewHolder.country_name)
 
         supportActionBar?.title = "Detail"
 
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, fullname, Toast.LENGTH_SHORT).show()
         var retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .baseUrl("https://restcountries.eu/rest/v2/callingcode/" +
-                    "").build()
+            .baseUrl("https://restcountries.eu/rest/v2/name/").build()
 
         var postsApi = retrofit.create(INetworkAPI_detail::class.java)
 
-        var response: Observable<List<Country>> = postsApi.getAllCountryByName(msg)
+        var response: Observable<List<Country>> = postsApi.getAllCountryByName(fullname,"true")
 
 
         response.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe {
-            layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager
+            layoutManager = LinearLayoutManager(this)
             detail_view.layoutManager = layoutManager
             detail_view.adapter = DetailViewAdaptor(this,it)
 

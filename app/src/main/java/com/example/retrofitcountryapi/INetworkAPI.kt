@@ -120,8 +120,9 @@ interface INetworkAPI {
 
 interface INetworkAPI_detail {
 
-    @GET("{name}/")
-    fun getAllCountryByName(@Path("name") name: String): Observable<List<Country>>
+    @GET("{name}")
+    fun getAllCountryByName(@Path("name") name: String,
+    @Query("fullText") fullText:String): Observable<List<Country>>
 
 
 }
