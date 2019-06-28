@@ -18,10 +18,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.country_name_layout.view.*
 import kotlinx.android.synthetic.main.detail_layout.view.*
 import kotlinx.android.synthetic.main.country_name_layout.view.*
-var TAG: String  = "PostItemAdapter"
 class CountryNameAdapter(val context: Context, var CountryList: List<Country>) :
-
-
     RecyclerView.Adapter<CountryNameAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):CustomViewHolder {
@@ -31,9 +28,11 @@ class CountryNameAdapter(val context: Context, var CountryList: List<Country>) :
         )
         return CustomViewHolder(layoutInflater)
     }
+
     override fun getItemCount(): Int {
         return CountryList.size
     }
+
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
 
@@ -42,9 +41,11 @@ class CountryNameAdapter(val context: Context, var CountryList: List<Country>) :
         holder.view.name?.text = CountryList[position].name
         holder.view.capital?.text = "Capital - " +CountryList[position].capital
 
+        // Using Glide to show SVG images
         var thumbnailImageView = holder.view.flag_imageView
         GlideToVectorYou.justLoadImage(holder.view.context as Activity?, Uri.parse(CountryList[position].flag), thumbnailImageView)
 
+        //Passing name parameter in CustomViewHolder to be sent to next activity
         holder?.name = name
     }
 

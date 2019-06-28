@@ -4,9 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.widget.Toast
-import com.example.retrofitcountryapi.adaptor.DetailViewAdaptor
 import com.example.retrofitcountryapi.adaptor.CountryNameAdapter
+import com.example.retrofitcountryapi.adaptor.DetailViewAdaptor
 import com.google.gson.GsonBuilder
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,19 +20,23 @@ class Main2Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        //Getting Country name from Country Name Adapter
         var fullname =  intent.getStringExtra(CountryNameAdapter.CustomViewHolder.country_name)
 
-        supportActionBar?.title = "Detail"
+        //Changing Title of tool bar according to Country Name
+        supportActionBar?.title = fullname
 
-//        Toast.makeText(this, fullname, Toast.LENGTH_SHORT).show()
+        // Using retrofit to search detail of country by full Name
         var retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .baseUrl("https://restcountries.eu/rest/v2/name/").build()
 
-        var postsApi = retrofit.create(INetworkAPI_detail::class.java)
+        var FullNameApi = retrofit.create(INetworkAPI_detail::class.java)
 
-        var response: Observable<List<Country>> = postsApi.getAllCountryByName(fullname,"true")
+        var response: Observable<List<Country>> = FullNameApi.getAllCountryByName(fullname,"true")
 
 
         response.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe {

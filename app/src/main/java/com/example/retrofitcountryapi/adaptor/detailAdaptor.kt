@@ -34,30 +34,31 @@ class DetailViewAdaptor(var context: Context, var CountryList: List<Country>) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder?.name?.text = CountryList[position].name
-        holder?.capital?.text = "\uD835\uDDD6\uD835\uDDEE\uD835\uDDFD\uD835\uDDF6\uD835\uDE01\uD835\uDDEE\uD835\uDDF9 - "+ CountryList[position].capital
-        holder?.alpha2Code?.text = "Alpha2Code - "+CountryList[position].alpha2Code
-        holder?.alpha3Code?.text = "Alpha3Code - "+CountryList[position].alpha3Code
-        holder?.region?.text ="Region - "+ CountryList[position].region
-        holder?.area?.text = "Area - "+CountryList[position].area.toString()
-        holder?.cioc?.text ="Cioc - "+ CountryList[position].cioc
-        holder?.gini?.text ="Gini - "+ CountryList[position].gini.toString()
-        holder?.nativeName?.text ="Native Name - "+ CountryList[position].nativeName
-        holder?.numericCode?.text ="Numaric Code - "+ CountryList[position].numericCode
-        holder?.population?.text = "Population - "+CountryList[position].population.toString()
-        holder?.subregion?.text ="SubRegion - "+ CountryList[position].subregion
-        holder?.demonym?.text ="Demonym - "+ CountryList[position].demonym
+        // Getting All Data And passing to ViewHolder
 
-        val borders_len = CountryList[position].borders
-        if(borders_len.isEmpty()){
-            var borders:String = " \uD835\uDDD5\uD835\uDDFC\uD835\uDDFF\uD835\uDDF1\uD835\uDDF2\uD835\uDDFF\uD835\uDE00 \n Boders Not Available "
+        holder?.capital?.text = "Capital - "+ CountryList[position].capital
+        holder?.alpha2Code?.text = "Alpha2Code   - "+CountryList[position].alpha2Code
+        holder?.alpha3Code?.text = "Alpha3Code   - "+CountryList[position].alpha3Code
+        holder?.region?.text ="Region       - "+ CountryList[position].region
+        holder?.area?.text = "Area         - "+CountryList[position].area.toString()
+        holder?.cioc?.text ="Cioc         - "+ CountryList[position].cioc
+        holder?.gini?.text ="Gini         - "+ CountryList[position].gini.toString()
+        holder?.nativeName?.text ="Native Name  - "+ CountryList[position].nativeName
+        holder?.numericCode?.text ="Numeric Code - "+ CountryList[position].numericCode
+        holder?.population?.text = "Population   - "+CountryList[position].population.toString()
+        holder?.subregion?.text ="SubRegion    - "+ CountryList[position].subregion
+        holder?.demonym?.text ="Demonym      - "+ CountryList[position].demonym
+
+        val borders_list = CountryList[position].borders
+        if(borders_list.isEmpty()){
+            var borders:String = "  Boders Not Available "
             holder?.borders?.text = borders.trim()
         }else{
-            var borders:String = " \uD835\uDDD5\uD835\uDDFC\uD835\uDDFF\uD835\uDDF1\uD835\uDDF2\uD835\uDDFF\uD835\uDE00 "
+            var borders:String = ""
             borders+="\n"
             var count_border = 1
-            for(item in borders_len){
-                borders=  borders + count_border + ". "+ item
+            for(item in borders_list){
+                borders=  borders + count_border + "."+ item
                 borders+="\n"
                 count_border++
             }
@@ -65,84 +66,75 @@ class DetailViewAdaptor(var context: Context, var CountryList: List<Country>) :
         }
 
 
-        val callingCodes_len = CountryList[position].callingCodes
-        if(callingCodes_len.isEmpty()){
-            var callingCodes:String = " \uD835\uDDD6\uD835\uDDEE\uD835\uDDF9\uD835\uDDF9\uD835\uDDF6\uD835\uDDFB\uD835\uDDF4 \uD835\uDDD6\uD835\uDDFC\uD835\uDDF1\uD835\uDDF2\uD835\uDE00 \n Calling Codes Not Available"
+        val callingCodes_list = CountryList[position].callingCodes
+        if(callingCodes_list.isEmpty()){
+            var callingCodes:String = " Calling Codes Not Available"
             holder?.callingCodes?.text = callingCodes.trim()
         }else{
-
-            var callingCodes:String = "\uD835\uDDD6\uD835\uDDEE\uD835\uDDF9\uD835\uDDF9\uD835\uDDF6\uD835\uDDFB\uD835\uDDF4 \uD835\uDDD6\uD835\uDDFC\uD835\uDDF1\uD835\uDDF2\uD835\uDE00"
+            var callingCodes:String = ""
             callingCodes+="\n"
             var count_calling = 1
-            for(item in callingCodes_len){
-                callingCodes= callingCodes +count_calling +". "+ "`"+item+"`"
+            for(item in callingCodes_list){
+                callingCodes= callingCodes +count_calling +"."+ "`"+item+"`"
                 callingCodes+="\n"
             }
             holder?.callingCodes?.text = callingCodes.trim()
         }
 
-        val latlng_len = CountryList[position].latlng
-        if(latlng_len.isEmpty()){
-            var latlng:String = " \uD835\uDDDF\uD835\uDDEE\uD835\uDE01\uD835\uDDF6\uD835\uDE01\uD835\uDE02\uD835\uDDF1\uD835\uDDF2 \uD835\uDDEE\uD835\uDDFB\uD835\uDDF1 \uD835\uDDDF\uD835\uDDFC\uD835\uDDFB\uD835\uDDF4\uD835\uDDF6\uD835\uDE01\uD835\uDE02\uD835\uDDF1\uD835\uDDF2 \n Latitude and Longitude Not Available"
+        val latlng_list = CountryList[position].latlng
+        if(latlng_list.isEmpty()){
+            var latlng:String = " Latitude and Longitude Not Available"
             holder?.latlng?.text = latlng
         }else{
-
-            var latlng:String = " \uD835\uDDDF\uD835\uDDEE\uD835\uDE01\uD835\uDDF6\uD835\uDE01\uD835\uDE02\uD835\uDDF1\uD835\uDDF2 \uD835\uDDEE\uD835\uDDFB\uD835\uDDF1 \uD835\uDDDF\uD835\uDDFC\uD835\uDDFB\uD835\uDDF4\uD835\uDDF6\uD835\uDE01\uD835\uDE02\uD835\uDDF1\uD835\uDDF2 "
-            latlng+="\n"
-            for(item in latlng_len){
-                latlng+= " " +item.toString() + " , "
+            var latlng:String = " "
+            for(item in latlng_list){
+                latlng+= item.toString() + ","
             }
-            holder?.latlng?.text = latlng.dropLast(2)
+            holder?.latlng?.text = latlng.dropLast(1)
         }
 
-
-        val timezones_len = CountryList[position].timezones
-        if(timezones_len.isEmpty()){
-            var timezones:String = " \uD835\uDDE7\uD835\uDDF6\uD835\uDDFA\uD835\uDDF2\uD835\uDE07\uD835\uDDFC\uD835\uDDFB\uD835\uDDF2 \n Timezone Not Available"
+        val timezones_list = CountryList[position].timezones
+        if(timezones_list.isEmpty()){
+            var timezones:String = "  Timezone Not Available"
             holder?.timezones?.text = timezones.trim()
         }else{
-
-            var timezones:String = " \uD835\uDDE7\uD835\uDDF6\uD835\uDDFA\uD835\uDDF2\uD835\uDE07\uD835\uDDFC\uD835\uDDFB\uD835\uDDF2 "
+            var timezones:String = "  "
             timezones+="\n"
             var count_timezon = 1
-            for(item in timezones_len){
-                timezones = timezones + count_timezon + ". " + item
+            for(item in timezones_list){
+                timezones = timezones + count_timezon + "." + item
                 timezones+="\n"
                 count_timezon++
             }
             holder?.timezones?.text = timezones.trim()
         }
 
-
-        val topLevelDomain_len = CountryList[position].topLevelDomain
-        if(topLevelDomain_len.isEmpty()){
-            var topLevelDomain:String = " \uD835\uDDE7\uD835\uDDFC\uD835\uDDFD \uD835\uDDDF\uD835\uDDF2\uD835\uDE03\uD835\uDDF2\uD835\uDDF9 \uD835\uDDD7\uD835\uDDFC\uD835\uDDFA\uD835\uDDEE\uD835\uDDF6\uD835\uDDFB\n  Domain Not Available"
+        val topLevelDomain_list = CountryList[position].topLevelDomain
+        if(topLevelDomain_list.isEmpty()){
+            var topLevelDomain:String = "   Domain Not Available"
             holder?.topLevelDomain?.text = topLevelDomain.trim()
         }else{
-
-            var topLevelDomain:String = " \uD835\uDDE7\uD835\uDDFC\uD835\uDDFD \uD835\uDDDF\uD835\uDDF2\uD835\uDE03\uD835\uDDF2\uD835\uDDF9 \uD835\uDDD7\uD835\uDDFC\uD835\uDDFA\uD835\uDDEE\uD835\uDDF6\uD835\uDDFB\n "
+            var topLevelDomain:String = ""
             topLevelDomain+="\n"
             var count_toplevedomain  = 1
-            for(item in topLevelDomain_len){
-                topLevelDomain = topLevelDomain + count_toplevedomain +  ". "+ '"'+item+'"'
+            for(item in topLevelDomain_list){
+                topLevelDomain = topLevelDomain + count_toplevedomain +  "."+ '"'+item+'"'
                 topLevelDomain+="\n"
                 count_toplevedomain++
             }
             holder?.topLevelDomain?.text = topLevelDomain.trim()
         }
 
-
-        val altSpellings_len = CountryList[position].altSpellings
-        if(altSpellings_len.isEmpty()){
-            var altSpellings:String = " \uD835\uDDD4\uD835\uDDF9\uD835\uDE01 \uD835\uDDE6\uD835\uDDFD\uD835\uDDF2\uD835\uDDF9\uD835\uDDF9\uD835\uDDF6\uD835\uDDFB\uD835\uDDF4\uD835\uDE00 \n Alt Spellings Not Available"
+        val altSpellings_list = CountryList[position].altSpellings
+        if(altSpellings_list.isEmpty()){
+            var altSpellings:String = "  Alt Spellings Not Available"
             holder?.altSpellings?.text = altSpellings.trim()
         }else{
-
-            var altSpellings:String = " \uD835\uDDD4\uD835\uDDF9\uD835\uDE01 \uD835\uDDE6\uD835\uDDFD\uD835\uDDF2\uD835\uDDF9\uD835\uDDF9\uD835\uDDF6\uD835\uDDFB\uD835\uDDF4\uD835\uDE00 "
+            var altSpellings:String = " "
             altSpellings+="\n"
             var count_altspellings = 1
-            for(item in altSpellings_len){
-                altSpellings= altSpellings + count_altspellings+ " - "+item
+            for(item in altSpellings_list){
+                altSpellings= altSpellings + count_altspellings+ "."+item
                 altSpellings+="\n"
                 count_altspellings++
             }
@@ -150,18 +142,17 @@ class DetailViewAdaptor(var context: Context, var CountryList: List<Country>) :
         }
 
 
-        val language_len = CountryList[position].languages
-        var name:String = " \uD835\uDDDF\uD835\uDDEE\uD835\uDDFB\uD835\uDDF4\uD835\uDE02\uD835\uDDEE\uD835\uDDF4\uD835\uDDF2 "
-        name+="\n"
+        val language_list = CountryList[position].languages
+        var name:String = ""
         var count_language = 1
-        for(item in language_len){
-            name= name + count_language +". "+"Name - "+item.name
+        for(item in language_list){
+            name= name + count_language +"."+"Name        - "+item.name
             name+="\n"
-            name= name + "    Native Name - "+item.nativeName
+            name= name + "  Native Name - "+item.nativeName
             name+="\n"
-            name = name +"    iso6391 - "+ item.iso6391
+            name = name +"  iso6391     - "+ item.iso6391
             name+="\n"
-            name= name +"    iso6392 - "+item.iso6392
+            name= name +"  iso6392     - "+item.iso6392
             name+="\n"
             name+="\n"
             count_language++
@@ -169,113 +160,102 @@ class DetailViewAdaptor(var context: Context, var CountryList: List<Country>) :
         holder?.lang_name?.text = name.trim()
 
 
-        val Translations_len = CountryList[position].translations
-        var Translations:String = " \uD835\uDDE7\uD835\uDDFF\uD835\uDDEE\uD835\uDDFB\uD835\uDE00\uD835\uDDF9\uD835\uDDEE\uD835\uDE01\uD835\uDDF6\uD835\uDDFC\uD835\uDDFB\uD835\uDE00 "
+        val Translations_list = CountryList[position].translations
+        var Translations:String = "  "
+            Translations= Translations+ ".IT - "+ Translations_list.it
             Translations+="\n"
-            Translations= Translations+ "  it - "+ Translations_len.it
+            Translations= Translations+ ".BR - "+Translations_list.br
             Translations+="\n"
-            Translations= Translations+ "  br - "+Translations_len.br
+            Translations= Translations+ ".DE - "+Translations_list.de
             Translations+="\n"
-            Translations= Translations+ "  de - "+Translations_len.de
+            Translations= Translations+ ".ES - "+Translations_list.es
             Translations+="\n"
-            Translations= Translations+ "  es - "+Translations_len.es
+            Translations= Translations+ ".FA - "+Translations_list.fa
             Translations+="\n"
-            Translations= Translations+ "  fa - "+Translations_len.fa
+            Translations= Translations+ ".FR - "+Translations_list.fr
             Translations+="\n"
-            Translations= Translations+ "  fr - "+Translations_len.fr
+            Translations= Translations+ ".HR - "+Translations_list.hr
             Translations+="\n"
-            Translations= Translations+ "  hr - "+Translations_len.hr
+            Translations= Translations+ ".JA - "+Translations_list.ja
             Translations+="\n"
-            Translations= Translations+ "  ja - "+Translations_len.ja
+            Translations= Translations+ ".NL - "+Translations_list.nl
             Translations+="\n"
-            Translations= Translations+ "  nl - "+Translations_len.nl
+            Translations= Translations+ ".PT - "+Translations_list.pt
             Translations+="\n"
-            Translations= Translations+ "  pt - "+Translations_len.pt
-            Translations+="\n"
-
         holder?.Translations?.text = Translations.trim()
 
-
-        val Currency_len = CountryList[position].currencies
-        var Currency:String = " \uD835\uDDD6\uD835\uDE02\uD835\uDDFF\uD835\uDDFF\uD835\uDDF2\uD835\uDDFB\uD835\uDDF0\uD835\uDE06"
+        val Currency_list = CountryList[position].currencies
+        var Currency:String = " "
             Currency+= "\n"
         var count_currency = 1
-        for(item in Currency_len){
-            Currency= Currency+ count_currency + ". Name - "+item.name
+        for(item in Currency_list){
+            Currency= Currency+ count_currency + ".Name   - "+item.name
             Currency+="\n"
-            Currency= Currency + "    Code - "+item.code
+            Currency= Currency + "  Code   - "+item.code
             Currency+="\n"
-            Currency= Currency + "    Symbol - "+item.symbol
+            Currency= Currency + "  Symbol - "+item.symbol
             Currency+="\n"
             count_currency++
         }
         holder?.Currency?.text = Currency.trim()
 
 
-        val RegionalBloc_len = CountryList[position].regionalBlocs
-        if(RegionalBloc_len.isEmpty()){
-            var RegionalBloc:String = " \uD835\uDDE5\uD835\uDDF2\uD835\uDDF4\uD835\uDDF6\uD835\uDDFC\uD835\uDDFB\uD835\uDDEE\uD835\uDDF9 \uD835\uDDD5\uD835\uDDF9\uD835\uDDFC\uD835\uDDF0 \n Regional Bloc Not Available"
+        val RegionalBloc_list = CountryList[position].regionalBlocs
+        if(RegionalBloc_list.isEmpty()){
+            var RegionalBloc:String = " Regional Bloc Not Available"
             holder?.regionalBloc?.text = RegionalBloc.trim()
         }else{
-            var RegionalBloc:String = " \uD835\uDDE5\uD835\uDDF2\uD835\uDDF4\uD835\uDDF6\uD835\uDDFC\uD835\uDDFB\uD835\uDDEE\uD835\uDDF9 \uD835\uDDD5\uD835\uDDF9\uD835\uDDFC\uD835\uDDF0"
+            var RegionalBloc:String = " "
             RegionalBloc+="\n"
             var count_RegionalBloc = 1
-            for(item in RegionalBloc_len){
-                RegionalBloc =RegionalBloc + count_RegionalBloc+ ". "+ "Name - "+item.name
+            for(item in RegionalBloc_list){
+                RegionalBloc =RegionalBloc + count_RegionalBloc+ "."+ "Name         - "+item.name
                 RegionalBloc+="\n"
-                RegionalBloc= RegionalBloc + "    Acronym - "+ item.acronym
+                RegionalBloc= RegionalBloc + "  Acronym      - "+ item.acronym
                 RegionalBloc+="\n"
-                val otherAcronyms_len = item.otherAcronyms
-                if(otherAcronyms_len.isEmpty()){
+                val otherAcronyms_list = item.otherAcronyms
+                if(otherAcronyms_list.isEmpty()){
                     var otherAcronyms:String = ""
-                    RegionalBloc = RegionalBloc +"    \uD835\uDC0E\uD835\uDC2D\uD835\uDC21\uD835\uDC1E\uD835\uDC2B \uD835\uDC00\uD835\uDC1C\uD835\uDC2B\uD835\uDC28\uD835\uDC27\uD835\uDC32\uD835\uDC26 -\n     Other Acronyms Not Available " + otherAcronyms
+                    RegionalBloc = RegionalBloc +"  \uD835\uDC0E\uD835\uDC2D\uD835\uDC21\uD835\uDC1E\uD835\uDC2B \uD835\uDC00\uD835\uDC1C\uD835\uDC2B\uD835\uDC28\uD835\uDC27\uD835\uDC32\uD835\uDC26 -\n     Other Acronyms Not Available " + otherAcronyms
                     RegionalBloc+="\n"
                 }else{
-
                     var otherAcronyms:String = ""
                     var count_otherAcronyms = 1
-                    for(newItem in otherAcronyms_len){
-                        otherAcronyms= "     "+otherAcronyms+ count_otherAcronyms +". "+newItem
+                    for(newItem in otherAcronyms_list){
+                        otherAcronyms= otherAcronyms+"     "+ count_otherAcronyms +". "+newItem
                         otherAcronyms+="\n"
                         count_otherAcronyms++
                     }
-                    RegionalBloc = RegionalBloc +"    \uD835\uDC0E\uD835\uDC2D\uD835\uDC21\uD835\uDC1E\uD835\uDC2B \uD835\uDC00\uD835\uDC1C\uD835\uDC2B\uD835\uDC28\uD835\uDC27\uD835\uDC32\uD835\uDC26 -\n     " + otherAcronyms
+                    RegionalBloc = RegionalBloc +"  \uD835\uDC0E\uD835\uDC2D\uD835\uDC21\uD835\uDC1E\uD835\uDC2B \uD835\uDC00\uD835\uDC1C\uD835\uDC2B\uD835\uDC28\uD835\uDC27\uD835\uDC32\uD835\uDC26      -" + otherAcronyms
                     RegionalBloc+="\n"
                 }
-
-
-                val otherNames_len = item.otherNames
-                if(otherNames_len.isEmpty()){
+                val otherNames_list = item.otherNames
+                if(otherNames_list.isEmpty()){
                     var otherNames:String = ""
-                    RegionalBloc= RegionalBloc +"    \uD835\uDC0E\uD835\uDC2D\uD835\uDC21\uD835\uDC1E\uD835\uDC2B \uD835\uDC0D\uD835\uDC1A\uD835\uDC26\uD835\uDC1E -\n     Other Names Not Available "+otherNames
+                    RegionalBloc= RegionalBloc +"  \uD835\uDC0E\uD835\uDC2D\uD835\uDC21\uD835\uDC1E\uD835\uDC2B \uD835\uDC0D\uD835\uDC1A\uD835\uDC26\uD835\uDC1E -\n     Other Names Not Available "+otherNames
                     RegionalBloc+="\n"
                 }else{
-
                     var otherNames:String = ""
                     var count_othername = 1
-                    for(newItems in otherNames_len){
-                        otherNames= "     "+otherNames + count_othername + ". "+newItems
+                    for(newItems in otherNames_list){
+                        otherNames= otherNames+"     "  + count_othername + ". "+newItems
                         otherNames+="\n"
                         count_othername++
                     }
-                    RegionalBloc= RegionalBloc +"    \uD835\uDC0E\uD835\uDC2D\uD835\uDC21\uD835\uDC1E\uD835\uDC2B \uD835\uDC0D\uD835\uDC1A\uD835\uDC26\uD835\uDC1E -\n     "+otherNames
+                    RegionalBloc= RegionalBloc +"  \uD835\uDC0E\uD835\uDC2D\uD835\uDC21\uD835\uDC1E\uD835\uDC2B \uD835\uDC0D\uD835\uDC1A\uD835\uDC26\uD835\uDC1E   -\n"+otherNames
                     RegionalBloc+="\n"
                 }
                 count_RegionalBloc++
             }
             holder?.regionalBloc?.text = RegionalBloc.trim()
         }
-
-
-
-
+        // Uses Glide to load SVG image in detail activity
         var thumbnailImageView = holder?.image
         GlideToVectorYou.justLoadImage(context as Activity?, Uri.parse(CountryList[position].flag), thumbnailImageView)
-
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        var name: TextView = view.country_name
+        //Connecting Data to respective TextView
         var capital: TextView = view.country_capital
         var alpha2Code: TextView = view.country_alpha2Code
         var alpha3Code: TextView = view.country_alpha3Code
@@ -300,7 +280,7 @@ class DetailViewAdaptor(var context: Context, var CountryList: List<Country>) :
         var Currency: TextView = view.country_Currency
         var Translations: TextView = view.country_Translations
     }
-    }
+}
 
 
 

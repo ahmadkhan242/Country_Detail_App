@@ -1,13 +1,16 @@
 package com.example.retrofitcountryapi
 
 import android.os.Bundle
+import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.widget.EditText
+import android.widget.Toolbar
 import com.example.retrofitcountryapi.adaptor.CountryNameAdapter
 import com.google.gson.GsonBuilder
 import io.reactivex.Observable
@@ -20,21 +23,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
     private lateinit var layoutManager: RecyclerView.LayoutManager
-
-    var countries: MutableList<String> = ArrayList()
-    var displayList: MutableList<String> = ArrayList()
+    var countries: MutableList<Country> = ArrayList()
+    var displayList: MutableList<Country> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
 
-
+        //Setting up retrofit for url responce
         val retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .baseUrl("https://restcountries.eu/rest/v2/").build()
 
-        val postsApi = retrofit.create(INetworkAPI::class.java)
+        val countryApi = retrofit.create(INetworkAPI::class.java)
 
-        var response: Observable<List<Country>> = postsApi.getAllPosts()
+        var response: Observable<List<Country>> = countryApi.getAllPosts()
 
         response.observeOn(AndroidSchedulers.mainThread()).subscribeOn(IoScheduler()).subscribe {
             layoutManager = LinearLayoutManager(this)
@@ -43,7 +46,8 @@ class MainActivity : AppCompatActivity() {
 
             fun addData() {
                 for(item in it ){
-                    countries.add(item.name)
+                    // Adding data to cuntries array for filtering
+                    countries.add(item)
                 }
             }
             addData()
@@ -51,12 +55,13 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
+    // Initiating Search option on toolbar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         val searchItem = menu.findItem(R.id.menu_search)
         if (searchItem != null) {
             val searchView = searchItem.actionView as SearchView
+//            searchView.layoutParams = ActionBar.LayoutParams(Gravity.RIGHT)
             val editext = searchView.findViewById<EditText>(android.support.v7.appcompat.R.id.search_src_text)
             editext.hint = "Search here..."
 
@@ -64,7 +69,6 @@ class MainActivity : AppCompatActivity() {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     return true
                 }
-
                 override fun onQueryTextChange(newText: String?): Boolean {
 
                     displayList.clear()
@@ -72,22 +76,20 @@ class MainActivity : AppCompatActivity() {
                         val search = newText.toLowerCase()
                         countries.forEach {
 
-                            if (it.toLowerCase().contains(search)) {
-                                Log.d("TAG",it)
+                            if (it.name.toLowerCase().contains(search)) {
+                                Log.d("TAG",it.name)
                                 displayList.add(it)
                             }
                         }
                     } else {
                         displayList.addAll(countries)
                     }
-//                    layoutManager = LinearLayoutManager(menu)
-                     rv__list_name.adapter?.notifyDataSetChanged()
+                    rv__list_name.adapter = CountryNameAdapter(baseContext, displayList)
+                    rv__list_name.adapter?.notifyDataSetChanged()
                     return true
                 }
-
             })
         }
-
         return super.onCreateOptionsMenu(menu)
     }
 

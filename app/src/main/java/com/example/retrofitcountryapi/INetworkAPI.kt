@@ -7,7 +7,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 
-
+//Creating Data Classes For country list
 data class Country(
     @SerializedName("alpha2Code")
     val alpha2Code: String,
@@ -112,17 +112,18 @@ data class Translations(
     @SerializedName("pt")
     val pt: String
 )
+
+// To get all Country name
 interface INetworkAPI {
 
     @GET("all/")
     fun getAllPosts(): Observable<List<Country>>
 }
 
+//To get Country Detail Search By name and Giving Query fullText=True to Search on basis of full name
 interface INetworkAPI_detail {
 
     @GET("{name}")
     fun getAllCountryByName(@Path("name") name: String,
     @Query("fullText") fullText:String): Observable<List<Country>>
-
-
 }
